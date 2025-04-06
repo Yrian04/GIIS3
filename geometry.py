@@ -13,7 +13,6 @@ class Matrix:
         self.cols = len(data[0]) if self.rows > 0 else 0
     
     def __mul__(self, other):
-        """Умножение матриц или матрицы на вектор"""
         if isinstance(other, Matrix):
             if self.cols != other.rows:
                 raise ValueError("Несовместимые размеры матриц")
@@ -25,7 +24,6 @@ class Matrix:
                         result[i][j] += self.data[i][k] * other.data[k][j]
             return Matrix(result)
         elif isinstance(other, (list, tuple)):
-            # Умножение матрицы на вектор
             if self.cols != len(other):
                 raise ValueError("Несовместимые размеры")
             
@@ -35,13 +33,11 @@ class Matrix:
                     result[i] += self.data[i][j] * other[j]
             return result
         else:
-            # Умножение на скаляр
             result = [[self.data[i][j] * other for j in range(self.cols)] 
                      for i in range(self.rows)]
             return Matrix(result)
     
     def transpose(self):
-        """Транспонирование матрицы"""
         result = [[self.data[j][i] for j in range(self.rows)] 
                  for i in range(self.cols)]
         return Matrix(result) 

@@ -2,13 +2,12 @@ from .base import Curve
 from geometry import Point, Matrix
 
 class BSplineCurve(Curve):
-    MIN_POINTS = 4 # Минимальное количество точек для этого B-сплайна
+    MIN_POINTS = 4
 
     def __init__(self):
         super().__init__()
         self.color = "blue"
         
-        # Матрица B-сплайна из методички (равномерный кубический)
         self.M = Matrix([
             [-1,  3, -3,  1],
             [ 3, -6,  3,  0],
@@ -27,8 +26,6 @@ class BSplineCurve(Curve):
         i = int(segment_t_total)
         local_t = segment_t_total - i
 
-        # Выбираем 4 точки для матрицы G: P[i], P[i+1], P[i+2], P[i+3]
-        # Индекс i будет меняться от 0 до n-4 включительно
         p0 = self.points[i]
         p1 = self.points[i+1]
         p2 = self.points[i+2]
@@ -43,7 +40,6 @@ class BSplineCurve(Curve):
 
         T_vec = [local_t**3, local_t**2, local_t, 1]
         
-        # P(t)^T = G^T * M^T * T^T
         M_T = self.M.transpose()
         G_T = G.transpose()
         temp_vec = M_T * T_vec  
